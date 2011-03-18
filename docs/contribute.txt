@@ -1,0 +1,223 @@
+######################
+Development guidelines
+######################
+
+This document is designed for developers, to help them contribute to the
+project.
+
+In the following sections, we will use /WORKSPACE/ to refer to the 
+project's workspace on your local machine (may be a server). The following 
+structure is recommended, so paths will be relative to it:
+
+* /WORKSPACE/             => base directory for the project
+* /WORKSPACE/docs/        => the documentation you are currently reading.
+
+We will refer to http://project.local/ as your development server URL.
+
+************
+Requirements
+************
+
+The following items are required:
+
+* general requirements, as described in the "Requirements" chapter of the 
+  :doc:`INSTALL` document.
+* Subversion, Git, Mercurial or whatever you need to clone the repository.
+* drush_make
+* tar, gzip and unzip for drush_make to be able to extract archives. Programs
+  such as git, hg, bzr or svn may be used in future releases. Currently they 
+  are not referenced in the "wsop.make" file.
+* patch
+
+***********************************************
+Installation / reinstallation / upgrade recipes
+***********************************************
+
+Recipe summaries for those who are used to Drupal, drush and SVN...
+
+Notice this document focuses on deploying the project for development purpose.
+It does not cover the installation of all components in the project. Look at
+the complete :doc:`INSTALL` page for full installation instructions.
+
+Prerequisites
+=============
+
+* configure your development server to serve /WORKSPACE/www at 
+  http://project.local/
+* create a suitable database. For MySQL, make sure the database collation is 
+  UTF8_GENERAL_CI.
+
+Brand new install
+=================
+
+* checkout/clone the project's repository to /WORKSPACE
+* cd /WORKSPACE/www
+* drush make --prepare-install wsop.make -y
+* sudo chown -R :www-data ./ && sudo chmod -R g+w ./
+* install project's profile at http://project.local/install.php
+* configure system settings at sites/default/settings.php
+* configure the website at http://project.local/
+
+Reinstall
+=========
+
+* cd /WORKSPACE/www
+* optionally backup settings.php and settings.system.php to save time. You may
+  use the /WORKSPACE/data folder for that purpose.
+* drush sql-drop
+* sudo ./clean.sh
+* follow install procedure from "drush make --prepare-install project.make -y".
+  Optionally restore settings.php before following the site installation via 
+  the Drupal's web interface.
+
+Upgrade, update
+===============
+
+Recipe to test updates:
+
+* Set code, database and files at a given revision, typically a tag. You may 
+  perform a full reinstall to a specified version, or maybe restore a backup if
+  you already have one.
+* Backup database and files:
+
+  .. code-block:: bash
+  
+  cd /WORKSPACE/www
+  mkdir ../data/backup
+  drush sql-dump --result-file=../data/backup/database.sql
+  rsync -rpt --progress --delete sites/default/files/ ../data/backup/files/
+
+* Update code to target revision
+* Run update procedure. See :doc:`UPGRADE`
+* Validate the update or If necessary, modify code to fix problems
+* Drop then restore database and files:
+  
+  .. code-block:: bash
+  
+  drush sql-drop
+  drush sql-cli < ../data/backup/database.sql
+  rsync -rpt --progress --delete ../data/backup/files/ sites/default/files/
+
+* You can now retry the update procedure...
+
+***************
+Developer tools
+***************
+
+You can easily install and enable additional developer tools with drush:
+
+.. code-block:: bash
+
+  drush dl MODULE && drush en -y MODULE
+
+As an example, the following command adds "coder" to your installation:
+
+.. code-block:: bash
+
+  drush dl coder && drush en -y coder
+
+Here is a suggestion of useful modules:
+
+* coder: developer tools, performance analysis
+* potx: extract translation files (.po) for specific module(s)
+* simpletest: run tests. See the "Testing" part below.
+
+*******
+Testing
+*******
+
+Unit tests with simpletest
+==========================
+
+Install simpletest
+------------------
+
+Install the simpletest module:
+
+.. code-block:: bash
+
+  cd /WORKSPACE/htdocs/  
+  drush dl simpletest
+  patch -p0 < sites/all/modules/simpletest/D6-core-simpletest.patch
+  drush en simpletest -y
+
+Run tests
+---------
+
+.. code-block:: bash
+
+  drush test-run
+
+*********************
+Working with features
+*********************
+
+WARNING: before you export features, make sure that english is the default
+language, or you will generate code containing french strings. It is a known
+limitation of the features module.
+
+WARNING: keep in mind that reverting (drush fr) features can override some 
+actions performed by the CMS administrator.
+
+***********************
+Exporting documentation
+***********************
+
+This documentation can be exported in various formats with the `python-sphinx`_ 
+program. Here is a recipe to export it as HTML files:
+
+* Install sphinx on your system
+* cd /WORKSPACE/
+* Execute the following command:
+  
+  .. code-block:: bash
+
+    sphinx-build -b html docs/ docs/_build/
+
+.. _`python-sphinx`: http://sphinx.pocoo.org/
+
+***********************
+Releasing and packaging
+***********************
+
+Guidelines to create a release for version and package it.
+
+* Update the following documents before releasing:
+
+  * docs/history.txt: add version information
+  * docs/UPGRADE.txt: upgrade instructions for system administrators
+
+* Change version number in all project-specific features and modules (*.info
+  files).
+* Build a version:
+  
+  .. code-block:: bash
+
+    # Variables (adapt them to your needs):
+    workspace="/WORKSPACE/"
+    local_repository="/WORKSPACE/"
+    remote_repository="http://"
+    version="1.0"
+    archive_name="project-$version"
+    
+    cd $workspace
+    svn export $remote_repository $archive_name
+    cd $archive_name
+    drush make project.make -y
+    cd ..
+
+  Notice that the --prepare-install option is not used in the previous 
+  commands. This prevents an overwrite of the settings.php file (loss of 
+  previous settings).
+  
+* Deploy on continuous integration environment, i.e. validate upgrade
+  procedure.
+* Create a tag.
+* Generate archive:
+
+  .. code-block:: bash
+
+    tar -zcvf $archive_name.tar.gz $archive_name
+
+* Release the archive.
+* Notify the release.

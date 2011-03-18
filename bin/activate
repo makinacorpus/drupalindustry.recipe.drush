@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Source this file before you work with the project.
+
+# Adapt this to your local environment.
+alias php=''
+alias drush=''
