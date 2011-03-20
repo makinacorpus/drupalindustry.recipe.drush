@@ -1,6 +1,6 @@
-##############
-Drupal project
-##############
+###################
+Drupal distribution
+###################
 
 This project deals with the directory structure of a Drupal distribution.
 It is experimental.
@@ -20,3 +20,14 @@ Use cases:
 * the "distribution" contains tests on environment setup and compatibility,
   such as the SQL server availability (assert that the SQL configuration
   is ok) or cron jobs.
+
+Synopsys
+========
+
+* checkout/download the distribution on your local filesystem
+* cd to the distribution root directory
+* customize configuration at etc/distribution.conf
+* bin/bootstrap => initializes distribution tools, downloads and installs drush
+* bin/install =>  deploys the distribution and the project on your system
+* source bin/activate => overrides some shell commands (drush, php) so that
+  you are sure to use the ones included in the distribution.

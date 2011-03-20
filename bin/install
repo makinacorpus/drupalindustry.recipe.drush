@@ -1,0 +1,3 @@
+# Deploy the distribution.
+
+# Should be a sub-command like bin/distribution install
