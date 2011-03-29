@@ -1,0 +1,10 @@
+##############################
+What is a Drupal distribution?
+##############################
+
+A Drupal distribution is a set of files and utilities that helps you to
+deploy a Drupal project on a target environment.
+
+The Drupal project focuses on functionality, whereas the distribution focuses
+on environment configuration, deployment, backup and other environment
+specific tasks.
