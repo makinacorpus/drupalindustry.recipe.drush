@@ -1,10 +1,25 @@
-#!/usr/bin/env bash
+# This file must be used with "source bin/activate" *from bash*
+# you cannot run it directly
+
+# Highly inspired by Python-virtualenv's bin/activate
+
+deactivate () {
+    # reset old environment variables
+    if [ -n "$_OLD_VIRTUAL_PATH" ] ; then
+        PATH="$_OLD_VIRTUAL_PATH"
+        export PATH
+        unset _OLD_VIRTUAL_PATH
+    fi
+}
 
 # Source this file before you work with the project.
-DISTRIBUTION_BASE_DIR=/home/benoit/web/drupal/drupal-distribution
+DISTRIBUTION_BASE_DIR=/home/benoit/web/drupal-distribution
 export DISTRIBUTION_BASE_DIR
 
 # Adapt this to your local environment.
 #export DRUSH_PHP=/usr/bin/php5
 #alias php='bin/php'
-alias drush='$DISTRIBUTION_BASE_DIR/bin/drush --root=$DISTRIBUTION_BASE_DIR/www'
+
+_OLD_VIRTUAL_PATH="$PATH"
+PATH="$DISTRIBUTION_BASE_DIR/bin:$PATH"
+export PATH
