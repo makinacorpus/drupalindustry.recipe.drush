@@ -1,2 +1,17 @@
-# Initialize distribution directory structure.
+#!/usr/bin/env bash
+
+# Initializes distribution directory structure and base tools
+DISTRIBUTION_BASE_DIR=/home/benoit/web/drupal/drupal-distribution
+cd $DISTRIBUTION_BASE_DIR
+
+# Initialize distribution directory structure
+#mkdir bin data docs etc parts var www
+
 # Download and install core components like drush and drush make.
+#apt-get install php5 php5-cli
+#wget drush.tar.gz # Replace by real URL!
+#tar -xzf drush.tar.gz parts/drush
+ln -s $DISTRIBUTION_BASE_DIR/parts/drush/drush $DISTRIBUTION_BASE_DIR/bin/drush
+
+#wget drush_make.tar.gz # Replace by real URL!
+#tar -xzf drush.tar.gz parts/drush_make

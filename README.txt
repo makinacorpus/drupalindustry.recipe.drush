@@ -31,3 +31,9 @@ Synopsys
 * bin/install =>  deploys the distribution and the project on your system
 * source bin/activate => overrides some shell commands (drush, php) so that
   you are sure to use the ones included in the distribution.
+
+TODO
+====
+
+* Create a proof-of-concept distribution. Install procedure works.
+* Create templates and tools to generate brand new distributions.

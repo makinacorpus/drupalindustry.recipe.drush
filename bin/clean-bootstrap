@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Clean files that can be recreated by bin/bootstrap.
+
+DISTRIBUTION_BASE_DIR=/home/benoit/web/drupal/drupal-distribution
+cd $DISTRIBUTION_BASE_DIR
+
+rm bin/drush

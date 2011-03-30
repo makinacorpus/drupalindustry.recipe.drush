@@ -1,3 +1,16 @@
+#!/usr/bin/env bash
 # Deploy the distribution.
 
 # Should be a sub-command like bin/distribution install
+
+# Read distribution configuration file(s)
+
+# Create DB
+
+# Build Drupal project
+drush make $DISTRIBUTION_BASE_DIR/etc/distribution.make
+
+# Prepare settings.php
+
+# Install site
+#drush site-install
