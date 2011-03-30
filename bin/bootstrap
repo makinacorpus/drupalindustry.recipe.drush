@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
+PREVIOUS_PWD=$(pwd)
+
 # Initializes distribution directory structure and base tools
-DISTRIBUTION_BASE_DIR=/home/benoit/web/drupal/drupal-distribution
 cd $DISTRIBUTION_BASE_DIR
 
 # Initialize distribution directory structure
@@ -11,7 +12,15 @@ cd $DISTRIBUTION_BASE_DIR
 #apt-get install php5 php5-cli
 #wget drush.tar.gz # Replace by real URL!
 #tar -xzf drush.tar.gz parts/drush
-ln -s $DISTRIBUTION_BASE_DIR/parts/drush/drush $DISTRIBUTION_BASE_DIR/bin/drush
 
 #wget drush_make.tar.gz # Replace by real URL!
 #tar -xzf drush.tar.gz parts/drush_make
+ln -s $DISTRIBUTION_BASE_DIR/parts/drush_make $DISTRIBUTION_BASE_DIR/parts/drush/commands/drush_make
+
+# Install custom drush in bin/
+# Here we generate it, but it could be downloaded from somewhere
+echo "#!/usr/bin/env bash" > bin/drush
+echo "$DISTRIBUTION_BASE_DIR/parts/drush/drush --root=$DISTRIBUTION_BASE_DIR/www \$@" >> bin/drush
+chmod +x bin/drush
+
+cd $PREVIOUS_PWD

@@ -10,6 +10,13 @@ deactivate () {
         export PATH
         unset _OLD_VIRTUAL_PATH
     fi
+    
+    # This should detect bash and zsh, which have a hash command that must
+    # be called to get it to forget past commands.  Without forgetting
+    # past commands the $PATH changes we made may not be respected
+    if [ -n "$BASH" -o -n "$ZSH_VERSION" ] ; then
+        hash -r
+    fi
 }
 
 # Source this file before you work with the project.
@@ -23,3 +30,10 @@ export DISTRIBUTION_BASE_DIR
 _OLD_VIRTUAL_PATH="$PATH"
 PATH="$DISTRIBUTION_BASE_DIR/bin:$PATH"
 export PATH
+
+# This should detect bash and zsh, which have a hash command that must
+# be called to get it to forget past commands.  Without forgetting
+# past commands the $PATH changes we made may not be respected
+if [ -n "$BASH" -o -n "$ZSH_VERSION" ] ; then
+    hash -r
+fi

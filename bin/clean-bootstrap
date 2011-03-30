@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Clean files that can be recreated by bin/bootstrap.
+# Should it be an option of the bootstrap command? Like "bootstrap clean"
 
-DISTRIBUTION_BASE_DIR=/home/benoit/web/drupal/drupal-distribution
-cd $DISTRIBUTION_BASE_DIR
-
-rm bin/drush
+rm $DISTRIBUTION_BASE_DIR/bin/drush
+rm $DISTRIBUTION_BASE_DIR/parts/drush/commands/drush_make
