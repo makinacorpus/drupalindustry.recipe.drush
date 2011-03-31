@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
-# Deploy the distribution.
 
+# Deploy the distribution.
 # Should be a sub-command like bin/distribution install
+
+PREVIOUS_PWD=$(pwd)
+cd $DISTRIBUTION_BASE_DIR
 
 # Read distribution configuration file(s)
 
 # Create DB
 
 # Build Drupal project
-drush make $DISTRIBUTION_BASE_DIR/etc/distribution.make
+cd www
+drush make $DISTRIBUTION_BASE_DIR/etc/distribution.make ./
+cd ..
 
 # Prepare settings.php
 
 # Install site
 #drush site-install
+
+cd $PREVIOUS_PWD
