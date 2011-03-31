@@ -1,6 +1,12 @@
 # This file must be used with "source bin/activate" *from bash*
 # you cannot run it directly
 
+# It performs the following actions:
+# * exports DISTRIBUTION_BASE_DIR in the environment, so that it can be used
+#   in other scripts here in bin/ folder.
+# * adds local bin/ folder to the PATH
+# * adds a "deactivate" command to restore the PATH to its previous state
+
 # Highly inspired by Python-virtualenv's bin/activate
 
 deactivate () {
@@ -19,7 +25,6 @@ deactivate () {
     fi
 }
 
-# Source this file before you work with the project.
 DISTRIBUTION_BASE_DIR=/home/benoit/web/drupal-distribution
 export DISTRIBUTION_BASE_DIR
 

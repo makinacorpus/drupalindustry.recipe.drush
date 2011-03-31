@@ -1,24 +1,41 @@
 #!/usr/bin/env bash
 
+# Requirements:
+# * wget
+
 PREVIOUS_PWD=$(pwd)
+
+DRUSH_VERSION="4.4" # TODO: get the latest version by default
+                    # TODO: read the required version in configuration file
+DRUSH_URL="http://ftp.drupal.org/files/projects/drush-7.x-$DRUSH_VERSION.tar.gz"
+DRUSH_MAKE_VERSION="2.2"
+DRUSH_MAKE_URL="http://ftp.drupal.org/files/projects/drush_make-6.x-$DRUSH_MAKE_VERSION.tar.gz"
 
 # Initializes distribution directory structure and base tools
 cd $DISTRIBUTION_BASE_DIR
 
 # Initialize distribution directory structure
-#mkdir bin data docs etc parts var www
+#mkdir bin
+#mkdir data
+#mkdir docs
+#mkdir etc
+mkdir parts
+mkdir var var/tmp
+#mkdir var var/log
+#mkdir var var/backup
+mkdir www
 
 # Download and install core components like drush and drush make.
-#apt-get install php5 php5-cli
-#wget drush.tar.gz # Replace by real URL!
-#tar -xzf drush.tar.gz parts/drush
+wget $DRUSH_URL -O var/tmp/drush.tar.gz
+tar -xzf var/tmp/drush.tar.gz -C parts
 
-#wget drush_make.tar.gz # Replace by real URL!
-#tar -xzf drush.tar.gz parts/drush_make
+wget $DRUSH_MAKE_URL -O var/tmp/drush_make.tar.gz
+tar -xzf var/tmp/drush_make.tar.gz -C parts
 ln -s $DISTRIBUTION_BASE_DIR/parts/drush_make $DISTRIBUTION_BASE_DIR/parts/drush/commands/drush_make
 
 # Install custom drush in bin/
-# Here we generate it, but it could be downloaded from somewhere
+# Here we generate it, but it could be downloaded from somewhere.
+# Important part is the --root option
 echo "#!/usr/bin/env bash" > bin/drush
 echo "$DISTRIBUTION_BASE_DIR/parts/drush/drush --root=$DISTRIBUTION_BASE_DIR/www \$@" >> bin/drush
 chmod +x bin/drush
