@@ -2,12 +2,14 @@
 # you cannot run it directly
 
 # It performs the following actions:
-# * exports DISTRIBUTION_BASE_DIR in the environment, so that it can be used
-#   in other scripts here in bin/ folder.
 # * adds local bin/ folder to the PATH
 # * adds a "deactivate" command to restore the PATH to its previous state
 
 # Highly inspired by Python-virtualenv's bin/activate
+
+# Initialize working directory variable
+DISTRIBUTION_BASE_DIR="$(dirname $(readlink -f ${BASH_SOURCE[0]}))"
+DISTRIBUTION_BASE_DIR="$(dirname $DISTRIBUTION_BASE_DIR)"
 
 deactivate () {
     # reset old environment variables
@@ -37,9 +39,6 @@ deactivate () {
         unset -f deactivate
     fi
 }
-
-DISTRIBUTION_BASE_DIR=/home/benoit/web/drupal-distribution
-export DISTRIBUTION_BASE_DIR
 
 # Adapt this to your local environment.
 #export DRUSH_PHP=/usr/bin/php5

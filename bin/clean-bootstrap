@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# Clean files that can be recreated by bin/bootstrap.
-# Should it be an option of the bootstrap command? Like "bootstrap clean"
-# WARNING: currently this command does not clean everything because it does not
-# protect files created by the user.
-
-rm $DISTRIBUTION_BASE_DIR/bin/drush
-rm -r $DISTRIBUTION_BASE_DIR/parts/drush
-rm -r $DISTRIBUTION_BASE_DIR/parts/drush_make
