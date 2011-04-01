@@ -17,7 +17,7 @@ cd $DISTRIBUTION_BASE_DIR
 
 # Build Drupal project
 cd www
-bin/drush make $DISTRIBUTION_BASE_DIR/etc/distribution.make ./
+../bin/drush make $DISTRIBUTION_BASE_DIR/etc/distribution.make ./
 cd ..
 
 # Prepare settings.php
