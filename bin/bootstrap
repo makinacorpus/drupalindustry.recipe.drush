@@ -32,10 +32,12 @@ mkdir www
 # Download and install core components like drush and drush make.
 wget $DRUSH_URL -O var/tmp/drush.tar.gz
 tar -xzf var/tmp/drush.tar.gz -C parts
+rm var/tmp/drush.tar.gz
 
 wget $DRUSH_MAKE_URL -O var/tmp/drush_make.tar.gz
 tar -xzf var/tmp/drush_make.tar.gz -C parts
 ln -s $DISTRIBUTION_BASE_DIR/parts/drush_make $DISTRIBUTION_BASE_DIR/parts/drush/commands/drush_make
+rm var/tmp/drush_make.tar.gz
 
 # Install custom drush in bin/
 # Here we generate it, but it could be downloaded from somewhere.
