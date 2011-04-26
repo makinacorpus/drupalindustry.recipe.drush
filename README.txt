@@ -1,17 +1,22 @@
-###################
-Drupal distribution
-###################
+#####################################
+Packaged distribution of SimplyDrupal
+#####################################
 
-This project deals with the directory structure of a Drupal distribution.
-It is experimental.
+SimplyDrupal is a Drupal project developed by Makina Corpus.
+This distribution will help you download and install it on a server.
 
 Quickstart
 ==========
 
-* Checkout/download the distribution on your local filesystem
-* cd to the distribution root directory
-* Execute bin/bootstrap => initializes distribution tools, downloads and 
-  installs drush
+* Checkout/download the distribution on your local filesystem::
+
+    git clone ssh://bbr@cgit.makina-corpus.net/home/users/bbr/git/drupal-simplydrupal-distribution simplydrupal-distribution
+
+* Place yourself in the the distribution root directory::
+
+    cd simplydrupal-distribution
+
+* Execute bin/bootstrap => initializes distribution tools, such as drush
 * Execute bin/install => deploys the distribution and the project on your 
   system
 
@@ -64,9 +69,3 @@ Use cases:
 * the "distribution" contains tests on environment setup and compatibility,
   such as the SQL server availability (assert that the SQL configuration
   is ok) or cron jobs.
-
-TODO
-====
-
-* Create a proof-of-concept distribution. Install procedure works.
-* Create templates and tools to generate brand new distributions.

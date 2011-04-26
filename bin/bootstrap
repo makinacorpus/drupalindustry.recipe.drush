@@ -1,7 +1,25 @@
 #!/usr/bin/env bash
 
-# Requirements:
-# * wget
+###############################################################################
+# Check requirements
+requirements_ok=1
+for app in 'wget' 'tar' 'git' 'php5'
+do
+    installed=`which $app`
+    if [[ ! -x $installed ]]
+    then
+        echo "Missing requirement $app."
+        requirements_ok=0
+    fi
+done
+if [[ $requirements_ok != 1 ]]
+then
+    echo "Bootstrap error: cannot continue due to missing requirements. Please check the list above."
+    exit 1
+fi
+
+###############################################################################
+# Initializations and settings
 
 # Initialize working directory variable
 DISTRIBUTION_BASE_DIR="$(dirname $(readlink -f ${BASH_SOURCE[0]}))"
@@ -19,24 +37,24 @@ DRUSH_MAKE_URL="http://ftp.drupal.org/files/projects/drush_make-6.x-$DRUSH_MAKE_
 cd $DISTRIBUTION_BASE_DIR
 
 # Initialize distribution directory structure
-#mkdir bin
-#mkdir data
-#mkdir docs
-#mkdir etc
-mkdir parts
+mkdir lib
 mkdir var var/tmp
-#mkdir var var/log
-#mkdir var var/backup
-mkdir www
 
-# Download and install core components like drush and drush make.
+###############################################################################
+# Libraries
+# Download and install libraries:
+# * drush
+# * drush_make
+
+# Download and install drush
 wget $DRUSH_URL -O var/tmp/drush.tar.gz
-tar -xzf var/tmp/drush.tar.gz -C parts
+tar -xzf var/tmp/drush.tar.gz -C lib
 rm var/tmp/drush.tar.gz
 
+# Download and install drush_make
 wget $DRUSH_MAKE_URL -O var/tmp/drush_make.tar.gz
-tar -xzf var/tmp/drush_make.tar.gz -C parts
-ln -s $DISTRIBUTION_BASE_DIR/parts/drush_make $DISTRIBUTION_BASE_DIR/parts/drush/commands/drush_make
+tar -xzf var/tmp/drush_make.tar.gz -C lib
+ln -s $DISTRIBUTION_BASE_DIR/parts/drush_make $DISTRIBUTION_BASE_DIR/lib/drush/commands/drush_make
 rm var/tmp/drush_make.tar.gz
 
 # Install custom drush in bin/
