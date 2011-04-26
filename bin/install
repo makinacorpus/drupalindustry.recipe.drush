@@ -11,18 +11,62 @@ PREVIOUS_PWD=$(pwd)
 
 cd $DISTRIBUTION_BASE_DIR
 
+# Prevent multiple installations
+PROJECT_DOWNLOADED=0
+if [[ -d www ]]
+then
+    PROJECT_DOWNLOADED=1
+fi
+
+PROJECT_INSTALLED=0
+if [[ -f www/sites/default/settings.php ]]
+then
+    PROJECT_INSTALLED=1
+fi
+
 # Read distribution configuration file(s)
 
 # Create DB
+echo "What is the database URL? (example: mysql://user:password@localhost/sd). Create one if necessary. "
+read DB_URL
+if [[ $DB_URL == "" ]]
+then
+    echo "Aborting: no database information provided."
+fi
+
+# Download SimplyDrupal
+if [[ PROJECT_DOWNLOADED == 0 ]]
+then
+    echo "What is your trigram on cgit.makina-corpus.net? "
+    read MC_TRIGRAM
+    SIMPLYDRUPAL_URL="ssh://$MC_TRIGRAM@cgit.makina-corpus.net/var/git/simplydrupal"
+    git clone $SIMPLYDRUPAL_URL www
+else
+    echo "SimplyDrupal has already been downloaded"
+fi
 
 # Build Drupal project
 cd www
-../bin/drush make $DISTRIBUTION_BASE_DIR/etc/distribution.make ./
-cd ..
+
+if [[ $PROJECT_INSTALLED == 1 ]]
+then
+	echo "A Drupal installation seems to be present in www/ folder, do you want to replay SimplyDrupal make? [y,n]"
+	read PROJECT_INSTALLED
+else
+    PROJECT_INSTALLED='y'
+fi
+if [[ $PROJECT_INSTALLED == 'y' ]]
+then
+	../bin/drush make $DISTRIBUTION_BASE_DIR/etc/distribution.make --prepare-install -y ./
+fi
 
 # Prepare settings.php
 
+echo "What is the site administrator email address? "
+read ADMIN_MAIL
+
 # Install site
-#bin/drush site-install
+../bin/drush site-install simplydrupal -y --db-url=$DB_URL --account-name=admin --account-pass=admin --account-mail=$ADMIN_MAIL --site-name="Simply Drupal" --site-mail=$ADMIN_MAIL
+cd ..
 
 cd $PREVIOUS_PWD
