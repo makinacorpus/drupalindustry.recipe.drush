@@ -16,9 +16,11 @@ Quickstart
 
     cd simplydrupal-distribution
 
-* Execute bin/bootstrap => initializes distribution tools, such as drush
-* Execute bin/install => deploys the distribution and the project on your 
-  system
+* Execute bin/bootstrap => initializes distribution tools, such as drush.
+* Execute bin/build => downloads the project and runs drush_make. At this
+  stage, you get a "Drupal distribution" in www/.
+* Visit the www/install.php file with a browser or execute bin/install
+  => configures the distribution and the project on your system
 
 Activate script: extend current shell environment
 =================================================
