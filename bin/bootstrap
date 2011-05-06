@@ -4,7 +4,7 @@
 # Check requirements
 echo "Checking requirements"
 requirements_ok=1
-for app in wget tar git php5 patch
+for app in wget tar git php5 patch curl
 do
     installed=`which $app`
     if [[ ! -x $installed ]]

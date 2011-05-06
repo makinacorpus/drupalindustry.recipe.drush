@@ -35,7 +35,7 @@ then
 fi
 
 # Download SimplyDrupal
-if [[ PROJECT_DOWNLOADED == 0 ]]
+if [[ $PROJECT_DOWNLOADED == 0 ]]
 then
     echo "What is your trigram on cgit.makina-corpus.net? "
     read MC_TRIGRAM
@@ -66,7 +66,7 @@ echo "What is the site administrator email address? "
 read ADMIN_MAIL
 
 # Install site
-../bin/drush site-install simplydrupal -y --db-url=$DB_URL --account-name=admin --account-pass=admin --account-mail=$ADMIN_MAIL --site-name="Simply Drupal" --site-mail=$ADMIN_MAIL
+../bin/drush site-install simplydrupal --db-url=$DB_URL --account-name=admin --account-pass=admin --account-mail=$ADMIN_MAIL --site-name="Simply Drupal" --site-mail=$ADMIN_MAIL
 cd ..
 
 cd $PREVIOUS_PWD
