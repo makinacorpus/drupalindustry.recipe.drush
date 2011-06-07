@@ -16,9 +16,13 @@ Quickstart
 
     cd simplydrupal-distribution
 
-* Execute bin/bootstrap => initializes distribution tools, such as drush.
-* Execute bin/build => downloads the project and runs drush_make. At this
-  stage, you get a "Drupal distribution" in www/.
+* Execute bin/bootstrap => initializes distribution tools, such as drush and
+  drush make.
+* Execute drush make from www/::
+
+    cd www
+    ../bin/drush make ../etc/distribution.make -y
+    
 * Visit the www/install.php file with a browser or execute bin/install
   => configures the distribution and the project on your system
 
@@ -50,7 +54,7 @@ Configuration
 =============
 
 Customize configuration files at distribution's etc/ directory.
-Currently, the "bin/install" command uses etc/distribution.make.
+Currently, the "bin/build" command uses etc/distribution.make.
 
 Theory
 ======
@@ -71,3 +75,6 @@ Use cases:
 * the "distribution" contains tests on environment setup and compatibility,
   such as the SQL server availability (assert that the SQL configuration
   is ok) or cron jobs.
+* a continuous integration distribution adds test components to the standard
+  profile. A production distribution adds monitoring components. A development
+  distribution adds developer tools...

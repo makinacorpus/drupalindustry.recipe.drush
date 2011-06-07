@@ -24,25 +24,15 @@ then
     PROJECT_INSTALLED=1
 fi
 
-# Read distribution configuration file(s)
+# TODO: Read distribution configuration file(s)
 
-# Download SimplyDrupal
-if [[ $PROJECT_DOWNLOADED == 0 ]]
-then
-    echo "What is your trigram on cgit.makina-corpus.net? "
-    read MC_TRIGRAM
-    SIMPLYDRUPAL_URL="ssh://$MC_TRIGRAM@cgit.makina-corpus.net/var/git/simplydrupal"
-    git clone $SIMPLYDRUPAL_URL www
-else
-    echo "SimplyDrupal has already been downloaded"
-fi
 
 # Build Drupal project
 cd www
 
 if [[ $PROJECT_INSTALLED == 1 ]]
 then
-  echo "A Drupal installation seems to be present in www/ folder, do you want to replay SimplyDrupal make? [y,n]"
+  echo "A Drupal installation seems to be present in www/ folder, do you want to replay drush make? [y,n]"
   read MAKE_PROJECT
 else
     MAKE_PROJECT='y'

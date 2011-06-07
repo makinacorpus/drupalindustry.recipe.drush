@@ -39,8 +39,13 @@ DRUSH_MAKE_URL="http://ftp.drupal.org/files/projects/drush_make-6.x-$DRUSH_MAKE_
 cd $DISTRIBUTION_BASE_DIR
 
 # Initialize distribution directory structure
-mkdir lib
-mkdir var var/tmp
+for directory in 'lib' 'var/tmp' 'var/log' 'www'
+do
+    if [[ ! -d www ]]
+    then
+        mkdir -p $directory
+    fi
+done
 
 ###############################################################################
 # Libraries
