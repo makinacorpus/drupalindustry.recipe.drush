@@ -10,7 +10,7 @@ Quickstart
 
 * Download the distribution on your local filesystem::
 
-    git clone ssh://bbr@cgit.makina-corpus.net/home/users/bbr/git/drupal-simplydrupal-distribution simplydrupal-distribution
+    git clone --branch profile-only ssh://USERNAME@cgit.makina-corpus.net/home/users/bbr/git/drupal-simplydrupal-distribution simplydrupal-distribution
 
 * Place yourself in the the distribution root directory::
 
@@ -20,6 +20,9 @@ Quickstart
   username. You can copy the etc/distribution.make.sample file to
   etc/distribution.make. Adapt at least your username in the
   projects[simplydrupal][download][url] directive.
+  The following command line replaces "USERNAME" by "bbr"::
+
+    sed -e 's/USERNAME/bbr/g' etc/distribution.make.sample > etc/distribution.make
   
 * Execute bin/bootstrap => initializes distribution tools, such as drush and
   drush make.
