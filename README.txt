@@ -8,7 +8,7 @@ This distribution will help you download and install it on a server.
 Quickstart
 ==========
 
-* Checkout/download the distribution on your local filesystem::
+* Download the distribution on your local filesystem::
 
     git clone ssh://bbr@cgit.makina-corpus.net/home/users/bbr/git/drupal-simplydrupal-distribution simplydrupal-distribution
 
@@ -16,15 +16,20 @@ Quickstart
 
     cd simplydrupal-distribution
 
+* Configure: create etc/distribution.make and adapt the profile's URL with your
+  username. You can copy the etc/distribution.make.sample file to
+  etc/distribution.make. Adapt at least your username in the
+  projects[simplydrupal][download][url] directive.
+  
 * Execute bin/bootstrap => initializes distribution tools, such as drush and
   drush make.
+
 * Execute drush make from www/::
 
     cd www
     ../bin/drush make ../etc/distribution.make -y
-    
-* Visit the www/install.php file with a browser or execute bin/install
-  => configures the distribution and the project on your system
+
+* Visit the www/install.php file with a browser
 
 Activate script: extend current shell environment
 =================================================
