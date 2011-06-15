@@ -1,14 +1,16 @@
-#####################################
-Packaged distribution of SimplyDrupal
-#####################################
+###################################
+Packaged toolchain for SimplyDrupal
+###################################
 
 SimplyDrupal is a Drupal project developed by Makina Corpus.
-This distribution will help you download and install it on a server.
+This toolchain is intended to help you download the simplydrupal's development
+files and generate the distribution files, so that you can easily install it
+on your server.
 
 Quickstart
 ==========
 
-* Download the distribution on your local filesystem::
+* Download the toolchain on your local filesystem::
 
     git clone --branch profile-only ssh://USERNAME@cgit.makina-corpus.net/home/users/bbr/git/drupal-simplydrupal-distribution simplydrupal-distribution
 
@@ -31,6 +33,8 @@ Quickstart
 
     cd www
     ../bin/drush make ../etc/distribution.make -y
+
+  You got the simplydrupal's distribution in the www/ folder.
 
 * Visit the www/install.php file with a browser
 
@@ -72,17 +76,17 @@ Definitions and goals:
 * the "project" contains stuff related to the application. It focuses on
   functionality, not on environment or deployment.
 * the "project" is intended to be deployed on an "environment" through a
-  "distribution".
-* the "distribution" focuses on deployment, compatibility and performance on
+  "toolchain".
+* the "toolchain" focuses on deployment, compatibility and performance on
   a given "environment".
 * An "environment" is composed of hardware, system software, external
   services...
 
 Use cases:
 
-* the "distribution" contains tests on environment setup and compatibility,
+* the "toolchain" contains tests on environment setup and compatibility,
   such as the SQL server availability (assert that the SQL configuration
   is ok) or cron jobs.
-* a continuous integration distribution adds test components to the standard
-  profile. A production distribution adds monitoring components. A development
-  distribution adds developer tools...
+* a continuous integration toolchain adds test components to the standard
+  profile. A production toolchain adds monitoring components. A development
+  toolchain adds developer tools...
