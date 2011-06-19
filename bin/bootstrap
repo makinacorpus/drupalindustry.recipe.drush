@@ -11,12 +11,6 @@ PREVIOUS_PWD=$(pwd)
 cd $BASE_DIR
 
 ###############################################################################
-# Settings and arguments
-
-DRUSH_URL="http://ftp.drupal.org/files/projects/drush-7.x-4.4.tar.gz"
-DRUSH_MAKE_URL="http://ftp.drupal.org/files/projects/drush_make-6.x-2.2.tar.gz"
-
-###############################################################################
 # Check requirements
 echo "Checking requirements"
 requirements_ok=1
@@ -53,31 +47,8 @@ echo "Done"
 
 ###############################################################################
 # Drush and drush_make
+$BASE_DIR/bin/drush_generator
 
-# Download and install drush
-echo "Installing drush"
-wget $DRUSH_URL -O var/tmp/drush.tar.gz
-tar -xzf var/tmp/drush.tar.gz -C lib
-rm var/tmp/drush.tar.gz
-echo "Done"
-
-# Download and install drush_make
-echo "Installing drush make"
-wget $DRUSH_MAKE_URL -O var/tmp/drush_make.tar.gz
-tar -xzf var/tmp/drush_make.tar.gz -C lib
-ln -s $BASE_DIR/lib/drush_make $BASE_DIR/lib/drush/commands/drush_make
-rm var/tmp/drush_make.tar.gz
-echo "Done"
-
-# Install custom drush in bin/
-# Here we generate it, but it could be downloaded from somewhere.
-# Important part is the --root option
-echo "Generating bin/drush command"
-echo "#!/usr/bin/env bash" > bin/drush
-echo "BASE_DIR=\"\$(dirname \$(readlink -f \${BASH_SOURCE[0]}))\"" >> bin/drush
-echo "BASE_DIR=\"\$(dirname \$BASE_DIR)\"" >> bin/drush
-echo "\$BASE_DIR/lib/drush/drush --root=\$BASE_DIR/www \$@" >> bin/drush
-chmod +x bin/drush
-echo "Done"
+###############################################################################
 
 cd $PREVIOUS_PWD
