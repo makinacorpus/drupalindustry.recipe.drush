@@ -41,7 +41,7 @@ this value depending on your needs).
 * Execute drush make:
   ::
 
-    bin/drush make etc/distribution.make.sample www
+    bin/drush make etc/distribution.make www
 
   You got a Drupal distribution in the www/ folder.
 
