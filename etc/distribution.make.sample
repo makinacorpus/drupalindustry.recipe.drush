@@ -15,4 +15,4 @@ projects[drupal][type] = core
 
 ;projects[simplydrupal][type] = "profile"
 ;projects[simplydrupal][download][type] = "git"
-;projects[simplydrupal][download][url] = "ssh://git@github.com/USER/PROJECT.git"
+;projects[simplydrupal][download][url] = "ssh://git@example.com/USER/PROJECT.git"
