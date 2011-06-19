@@ -40,10 +40,6 @@ deactivate () {
     fi
 }
 
-# Adapt this to your local environment.
-#export DRUSH_PHP=/usr/bin/php5
-#alias php='bin/php'
-
 _OLD_VIRTUAL_PATH="$PATH"
 PATH="$DISTRIBUTION_BASE_DIR/bin:$PATH"
 export PATH
@@ -56,7 +52,7 @@ if [ -z "$VIRTUAL_ENV_DISABLE_PROMPT" ] ; then
         # see http://www.zetadev.com/software/aspen/
         PS1="[`basename \`dirname \"$DISTRIBUTION_BASE_DIR\"\``] $PS1"
     else
-        PS1="(`basename \"$DISTRIBUTION_BASE_DIR\"`)$PS1"
+        PS1="(`basename \"$DISTRIBUTION_BASE_DIR\"`) $PS1"
     fi
     export PS1
 fi

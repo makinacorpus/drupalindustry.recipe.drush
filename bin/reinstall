@@ -1,8 +1,0 @@
-# Clean and redeploy the distribution.
-
-# Should be a sub-command like bin/distribution reinstall
-
-#backup
-#clean
-#install
-#restore parts of backup

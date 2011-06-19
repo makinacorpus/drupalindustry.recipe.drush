@@ -1,42 +1,53 @@
-###################################
-Packaged toolchain for SimplyDrupal
-###################################
+###########################
+Drupal deployment bootstrap
+###########################
+Helpers to deploy Drupal websites
+#################################
 
-SimplyDrupal is a Drupal project developed by Makina Corpus.
-This toolchain is intended to help you download the simplydrupal's development
-files and generate the distribution files, so that you can easily install it
-on your server.
+This project provides 3 tools:
+
+* bootstrap: run a single command to install drush and drush_make in your
+  deployment environment
+* drush shortcut: get a preconfigured drush command that acts on your
+  project instance. Basically overrides the --root option of drush.
+* activate: extend your shell's PATH
 
 Quickstart
 ==========
 
-* Download the toolchain on your local filesystem::
+Let say you want to deploy a Drupal project in /WORKSPACE (obviously, adapt
+this value depending on your needs).
 
-    git clone --branch profile-only ssh://USERNAME@cgit.makina-corpus.net/home/users/bbr/git/drupal-simplydrupal-distribution simplydrupal-distribution
+* Download this toolchain on your local filesystem:
+  ::
 
-* Place yourself in the the distribution root directory::
+    git clone https://benoitbryon@github.com/benoitbryon/drupal-deployment-boostrap.git /WORKSPACE
 
-    cd simplydrupal-distribution
+* Place yourself in the the deployment root directory:
+  ::
 
-* Configure: create etc/distribution.make and adapt the profile's URL with your
-  username. You can copy the etc/distribution.make.sample file to
-  etc/distribution.make. Adapt at least your username in the
-  projects[simplydrupal][download][url] directive.
-  The following command line replaces "USERNAME" by "bbr"::
+    cd /WORKSPACE
 
-    sed -e 's/USERNAME/bbr/g' etc/distribution.make.sample > etc/distribution.make
-  
 * Execute bin/bootstrap => initializes distribution tools, such as drush and
   drush make.
 
-* Execute drush make from www/::
+* Configure: create an etc/distribution.make and adapt setup the URL your
+  Drupal installation profile. You can copy and adapt the
+  etc/distribution.make.sample file to etc/distribution.make.
 
-    cd www
-    ../bin/drush make ../etc/distribution.make -y
+  Notice: make sure that your installation profile has a well-named .make file
+  to take advantage of drush make's recursive includes.
 
-  You got the simplydrupal's distribution in the www/ folder.
+* Execute drush make:
+  ::
 
-* Visit the www/install.php file with a browser
+    bin/drush make etc/distribution.make.sample www
+
+  You got a Drupal distribution in the www/ folder.
+
+* Visit the www/install.php file with a browser. You may have to configure
+  your server for that purpose. We recommend setting the server's configuration
+  in etc/.
 
 Activate script: extend current shell environment
 =================================================
@@ -55,38 +66,8 @@ rather than the one provided by the system.
 Do the following:
 
 * cd to the distribution root directory
-* source bin/activate => overrides some shell commands (currently drush) so
-  that you are sure to use the ones included in the distribution. Adds the
-  distribution's bin/ path to the current PATH.
+* source bin/activate => adds the local bin/ path to the current PATH.
+  Currently it overrides drush.
 * work, work, work...
-* Execute "deactivate" => restores the environment. Removes distribution's bin/
+* Execute "deactivate" => restores the environment. Removes local bin/
   from the current PATH.
-
-Configuration
-=============
-
-Customize configuration files at distribution's etc/ directory.
-Currently, the "bin/build" command uses etc/distribution.make.
-
-Theory
-======
-
-Definitions and goals:
-
-* the "project" contains stuff related to the application. It focuses on
-  functionality, not on environment or deployment.
-* the "project" is intended to be deployed on an "environment" through a
-  "toolchain".
-* the "toolchain" focuses on deployment, compatibility and performance on
-  a given "environment".
-* An "environment" is composed of hardware, system software, external
-  services...
-
-Use cases:
-
-* the "toolchain" contains tests on environment setup and compatibility,
-  such as the SQL server availability (assert that the SQL configuration
-  is ok) or cron jobs.
-* a continuous integration toolchain adds test components to the standard
-  profile. A production toolchain adds monitoring components. A development
-  toolchain adds developer tools...

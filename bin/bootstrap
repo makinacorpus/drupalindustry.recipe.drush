@@ -39,9 +39,9 @@ DRUSH_MAKE_URL="http://ftp.drupal.org/files/projects/drush_make-6.x-$DRUSH_MAKE_
 cd $DISTRIBUTION_BASE_DIR
 
 # Initialize distribution directory structure
-for directory in 'lib' 'var/tmp' 'var/log' 'www'
+for directory in 'lib' 'var/tmp' 'var/log'
 do
-    if [[ ! -d www ]]
+    if [[ ! -d directory ]]
     then
         mkdir -p $directory
     fi
