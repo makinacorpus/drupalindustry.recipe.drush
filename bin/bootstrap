@@ -1,91 +1,83 @@
 #!/usr/bin/env bash
 
 ###############################################################################
+# Initialize working directory
+
+# Initialize working directory variable
+BASE_DIR="$(dirname $(readlink -f ${BASH_SOURCE[0]}))"
+BASE_DIR="$(dirname $BASE_DIR)"
+
+PREVIOUS_PWD=$(pwd)
+cd $BASE_DIR
+
+###############################################################################
+# Settings and arguments
+
+DRUSH_URL="http://ftp.drupal.org/files/projects/drush-7.x-4.4.tar.gz"
+DRUSH_MAKE_URL="http://ftp.drupal.org/files/projects/drush_make-6.x-2.2.tar.gz"
+
+###############################################################################
 # Check requirements
 echo "Checking requirements"
 requirements_ok=1
-for app in wget tar git php5 patch curl
+missing_requirements="\n"
+for app in wget tar php5 patch curl
 do
     installed=`which $app`
     if [[ ! -x $installed ]]
     then
-        echo "Missing requirement $app."
+        echo "* ERROR: $app"
         requirements_ok=0
+    else
+        echo "* OK:    $app"
     fi
 done
 if [[ $requirements_ok != 1 ]]
 then
-    echo "Bootstrap error: cannot continue due to missing requirements. Please check the list above."
+    echo "Error: cannot continue due to missing requirements. See log above."
     exit 1
 fi
 echo "Ok"
 
 ###############################################################################
-# Initializations and settings
-
-# Initialize working directory variable
-DISTRIBUTION_BASE_DIR="$(dirname $(readlink -f ${BASH_SOURCE[0]}))"
-DISTRIBUTION_BASE_DIR="$(dirname $DISTRIBUTION_BASE_DIR)"
-
-PREVIOUS_PWD=$(pwd)
-
-DRUSH_VERSION="4.4" # TODO: get the latest version by default
-                    # TODO: read the required version in configuration file
-DRUSH_URL="http://ftp.drupal.org/files/projects/drush-7.x-$DRUSH_VERSION.tar.gz"
-DRUSH_MAKE_VERSION="2.2"
-DRUSH_MAKE_URL="http://ftp.drupal.org/files/projects/drush_make-6.x-$DRUSH_MAKE_VERSION.tar.gz"
-
-# Initializes distribution directory structure and base tools
-cd $DISTRIBUTION_BASE_DIR
-
 # Initialize distribution directory structure
+echo "Creating directories"
 for directory in 'lib' 'var/tmp' 'var/log'
 do
     if [[ ! -d directory ]]
     then
-        mkdir -p $directory
+        mkdir -p $directory && echo "* $BASE_DIR/$directory"
     fi
 done
+echo "Done"
 
 ###############################################################################
-# Libraries
-# Download and install libraries:
-# * drush
-# * drush_make
+# Drush and drush_make
 
 # Download and install drush
 echo "Installing drush"
 wget $DRUSH_URL -O var/tmp/drush.tar.gz
 tar -xzf var/tmp/drush.tar.gz -C lib
 rm var/tmp/drush.tar.gz
-echo "Ok"
+echo "Done"
 
 # Download and install drush_make
 echo "Installing drush make"
 wget $DRUSH_MAKE_URL -O var/tmp/drush_make.tar.gz
 tar -xzf var/tmp/drush_make.tar.gz -C lib
-ln -s $DISTRIBUTION_BASE_DIR/lib/drush_make $DISTRIBUTION_BASE_DIR/lib/drush/commands/drush_make
+ln -s $BASE_DIR/lib/drush_make $BASE_DIR/lib/drush/commands/drush_make
 rm var/tmp/drush_make.tar.gz
-echo "Ok"
-
-# Patch drush_make 
-echo "Patching drush make with http://drupal.org/node/1134326"
-DRUSH_MAKE_PATCH_URL="http://drupal.org/files/issues/drush_make_overwrite.patch"
-wget $DRUSH_MAKE_PATCH_URL -O var/tmp/drush_make_overwrite.patch
-cd $DISTRIBUTION_BASE_DIR/lib/drush_make
-patch -p1 < $DISTRIBUTION_BASE_DIR/var/tmp/drush_make_overwrite.patch
-cd $DISTRIBUTION_BASE_DIR
-echo "Ok"
+echo "Done"
 
 # Install custom drush in bin/
 # Here we generate it, but it could be downloaded from somewhere.
 # Important part is the --root option
 echo "Generating bin/drush command"
 echo "#!/usr/bin/env bash" > bin/drush
-echo "DISTRIBUTION_BASE_DIR=\"\$(dirname \$(readlink -f \${BASH_SOURCE[0]}))\"" >> bin/drush
-echo "DISTRIBUTION_BASE_DIR=\"\$(dirname \$DISTRIBUTION_BASE_DIR)\"" >> bin/drush
-echo "\$DISTRIBUTION_BASE_DIR/lib/drush/drush --root=\$DISTRIBUTION_BASE_DIR/www \$@" >> bin/drush
+echo "BASE_DIR=\"\$(dirname \$(readlink -f \${BASH_SOURCE[0]}))\"" >> bin/drush
+echo "BASE_DIR=\"\$(dirname \$BASE_DIR)\"" >> bin/drush
+echo "\$BASE_DIR/lib/drush/drush --root=\$BASE_DIR/www \$@" >> bin/drush
 chmod +x bin/drush
-echo "Ok"
+echo "Done"
 
 cd $PREVIOUS_PWD
