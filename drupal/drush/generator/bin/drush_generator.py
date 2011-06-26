@@ -10,7 +10,7 @@ import sys
 
 
 class DrushInstaller(object):
-    def __init__(self, argv):
+    def __init__(self, argv=[]):
         self.argv = argv
         # Defaults (conventions)
         self.base_dir = os.getcwd()

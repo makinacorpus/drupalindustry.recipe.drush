@@ -1,84 +1,111 @@
-###########################
-Drupal deployment bootstrap
-###########################
-Helpers to deploy Drupal websites
-#################################
+########################
+Drupal's Drush generator
+########################
+Install drush in your project's isolated environment
+####################################################
 
-This project provides 3 tools:
+Drush is THE Drupal-shell tool: http://drush.ws
 
-* drush shortcut generator: get a preconfigured drush command that acts on your
-  project instance. Basically overrides some drush option such as --root or
-  --include.
-* bootstrap: runs bin/drush_generator and creates some directories like
-  var/tmp or lib/.
-* activate: extend your shell's PATH
+This project provides helpers to install Drush in a project. It targets
+installation in buildout environments, but it can be used to install drush
+elsewhere.
 
-Quickstart
-==========
+Abstract
+========
 
-Let say you want to deploy a Drupal project in /WORKSPACE (obviously, adapt
-this value depending on your needs).
+This project may be useful for people who like isolating projects in
+directories: all stuff that belongs to a project is stored in one directory.
 
-* Download this toolchain on your local filesystem:
-  ::
+As an example, you can use something similar to the following directory
+structure:
 
-    git clone https://benoitbryon@github.com/benoitbryon/drupal-deployment-boostrap.git /WORKSPACE
+* www/ => Drupal's root (index.php, .htaccess...)
+* etc/ => configuration files, such as Apache's VirtualHost definitions
+* var/log => logs
 
-* Place yourself in the the deployment root directory:
-  ::
+To go further in isolation, let's add a "bin/" folder for shortcuts to "local"
+commands:
 
-    cd /WORKSPACE
+* bin/apache2
+* bin/mysql
+* ...
 
-* Execute bin/bootstrap => initializes distribution tools, such as drush and
-  drush make.
+Here comes the Drupal's Drush generator. Its goal is to generate a "local"
+drush script.
 
-* Configure: create an etc/distribution.make and adapt setup the URL your
-  Drupal installation profile. You can copy and adapt the
-  etc/distribution.make.sample file to etc/distribution.make.
+"local drush script" means:
 
-  Notice: make sure that your installation profile has a well-named .make file
-  to take advantage of drush make's recursive includes.
+* it is located somewhere in your project deployment. At bin/drush by default.
+* it preconfigures some drush options, so that all commands affect the project.
+  Basically, it customizes drush options like --root or --include.
 
-* Execute drush make:
-  ::
+Advantages:
 
-    bin/drush make etc/distribution.make www
+* install drush, drush make (and maybe other drush extensions) with one
+  command. If you are not convinced yet, a continuous integration server may
+  be.
+* versions are under control. Don't break all your websites with a drush
+  upgrade.
+* package what is necessary to your project. You can package your project with
+  drush. You actually don't package drush itself, but configuration.
+* be reproductible. Your team will share the environment, and so the production
+  server.
+* configure drush only once. You don't have to pass options such as --root,
+  --include and so on each time you use drush. Simply use bin/drush.
+* contribute to drush and its extensions. Using a development version of drush
+  is sometimes useful. But you certainly don't want to use an unstable version
+  on all your websites.
 
-  You got a Drupal distribution in the www/ folder.
+Requirements
+============
 
-* Visit the www/install.php file with a browser. You may have to configure
-  your server for that purpose. We recommend setting the server's configuration
-  in etc/.
+Currently, this tool is written in Python. So Python is required to generate
+the drush script.
+If you want it in PHP, BASH or whatever, fork and pull request! You are
+welcome!
 
-bin/drush_generator
-===================
+In order to be able to actually use the drush command, you need PHP!
 
-Invoke bin/drush_generator to download and install drush.
-You can configure some options in a configuration file with the -c option.
-An example is given at etc/drush.cfg.sample. You can try it like this:
+The generated drush script is BASH.
+
+The demo project: with buildout
+===============================
+
+The demo/ folder in this projects can be used as an example and as a sandbox.
 ::
 
-  bin/drush_generator -c etc/drush.cfg.sample
+  cd demo/
+  python bootstrap.py --distribute
+  bin/buildout
 
-Activate script: extend current shell environment
-=================================================
+You got a bin/drush command. Let's try it (PHP is required):
+::
 
-In some cases, you want to isolate the project environment and extend the
-default shell environment with the project's one. Source bin/activate for that
-purpose.
+  bin/drush --version
+  bin/drush make --version --no
 
-As an example, your Drupal website has some hook_install and hook_update
-implementations that call system commands, such as drush, git or other tools.
-Maybe the version that is installed on your system is not the adequate version,
-or maybe the program is not installed on your system.
-So you want to use the executable located in the distribution's bin/ directory
-rather than the one provided by the system. 
+Configuration
+=============
 
-Do the following:
+See demo/buildout.cfg for a sample buildout configuration.
 
-* cd to the distribution root directory
-* source bin/activate => adds the local bin/ path to the current PATH.
-  Currently it overrides drush.
-* work, work, work...
-* Execute "deactivate" => restores the environment. Removes local bin/
-  from the current PATH.
+See etc/drush.cfg.sample for a sample standalone configuration.
+
+With virtualenv
+===============
+
+You can install this tool in a virtual environment:
+::
+
+  virtualenv --no-site-packages --distribute env
+  source env/bin/activate
+  python setup.py install
+  ls -al env/bin/drush_generator.py
+
+Standalone usage
+================
+
+You can generate a drush script outside a buildout environment:
+::
+
+  drupal/drush/generator/bin/drush_generator.py
