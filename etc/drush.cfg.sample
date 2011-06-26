@@ -1,0 +1,11 @@
+[drush]
+drush_dir = lib/drush
+drush_url = http://ftp.drupal.org/files/projects/drush-7.x-4.4.tar.gz
+drush_wrapper = bin/drush
+drush_local_commands = lib/drush_commands
+drush_command_dirs =
+    lib/drush_commands
+drush_commands =
+    http://ftp.drupal.org/files/projects/drush_make-6.x-2.2.tar.gz
+tmp_dir = var/tmp
+www_dir = www

@@ -6,10 +6,11 @@ Helpers to deploy Drupal websites
 
 This project provides 3 tools:
 
-* bootstrap: run a single command to install drush and drush_make in your
-  deployment environment
-* drush shortcut: get a preconfigured drush command that acts on your
-  project instance. Basically overrides the --root option of drush.
+* drush shortcut generator: get a preconfigured drush command that acts on your
+  project instance. Basically overrides some drush option such as --root or
+  --include.
+* bootstrap: runs bin/drush_generator and creates some directories like
+  var/tmp or lib/.
 * activate: extend your shell's PATH
 
 Quickstart
@@ -48,6 +49,16 @@ this value depending on your needs).
 * Visit the www/install.php file with a browser. You may have to configure
   your server for that purpose. We recommend setting the server's configuration
   in etc/.
+
+bin/drush_generator
+===================
+
+Invoke bin/drush_generator to download and install drush.
+You can configure some options in a configuration file with the -c option.
+An example is given at etc/drush.cfg.sample. You can try it like this:
+::
+
+  bin/drush_generator -c etc/drush.cfg.sample
 
 Activate script: extend current shell environment
 =================================================
