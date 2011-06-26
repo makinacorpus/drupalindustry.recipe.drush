@@ -56,6 +56,15 @@ Advantages:
   is sometimes useful. But you certainly don't want to use an unstable version
   on all your websites.
 
+This tool may be used in conjunction with the following:
+
+* a deployment tool (currently, Python's buildout)
+* a template system to create directory structures, such as bin/, var/log...
+  Currently, none is supported. Python's paster templates could be used.
+* a shell-path tool, as Python-virtualenv's bin/activate. In order to run
+  "drush" directly, instead of "path/to/drush", as if drush was installed
+  system-wide.
+
 Requirements
 ============
 
