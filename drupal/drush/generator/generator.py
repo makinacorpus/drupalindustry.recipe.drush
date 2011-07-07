@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Helper to download and install Drush in a project's environment."""
 
 import ConfigParser
@@ -187,8 +186,3 @@ $DRUSH_CMD --include=$COMMAND_DIRS --root=$WWW_DIR $@""" % {
             f.write(script_content)
         os.chmod(self.drush_wrapper, 0755)
         print 'Done'
-
-
-if __name__ == "__main__":
-    installer = DrushInstaller(sys.argv[:])
-    installer()

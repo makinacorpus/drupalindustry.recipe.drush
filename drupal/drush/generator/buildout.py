@@ -2,7 +2,7 @@
 
 import logging, zc.buildout
 
-from drupal.drush.generator.bin.drush_generator import DrushInstaller
+from drupal.drush.generator.generator import DrushInstaller
 
 
 class DrushGeneratorRecipe:

@@ -28,7 +28,7 @@ setup(
         'Operating System :: OS Independent',
     ],
     packages=find_packages(),
-    namespace_packages=['drupal', 'drupal.drush', 'drupal.drush.generator'],
+    namespace_packages=['drupal', 'drupal.drush'],
     include_package_data = True,
     install_requires=[
         'setuptools',
@@ -39,6 +39,6 @@ setup(
         ],
     },
     scripts=[
-        'drupal/drush/generator/bin/drush_generator.py',
+        'bin/drush_generator.py',
     ],
 )
