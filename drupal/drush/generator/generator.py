@@ -9,12 +9,10 @@ import sys
 
 
 class DrushInstaller(object):
-    def __init__(self, argv=[]):
-        self.argv = argv
+    def __init__(self):
         # Defaults (conventions)
         self.base_dir = os.getcwd()
-        self.config_file = os.path.join('etc', 'drush.cfg')
-        lib_dir = 'lib'        
+        lib_dir = 'lib'
         self.drush_url = 'http://ftp.drupal.org/files/projects/drush-7.x-4.4.tar.gz'
         self.drush_dir = os.path.join(lib_dir, 'drush')
         self.drush_local_commands = os.path.join(lib_dir, 'drush_commands')
@@ -40,44 +38,8 @@ class DrushInstaller(object):
 
     def configure(self):
         """Read configuration from arguments and/or configuration files"""
-        parser = OptionParser()
-        parser.add_option("-c", "--config-file", action="store",
-                          type='string', dest="config_file",
-                          help="Path to configuration file.")
-        parser.add_option("--base-dir", action="store",
-                          type='string', dest="base_dir",
-                          help="Base directory for project environment.")
-        
-        (options, args) = parser.parse_args(self.argv)
-
-        # Read configuration file
-        config_file = options.config_file or self.config_file
-        if os.path.exists(config_file):
-            config = ConfigParser.ConfigParser()
-            config_section = 'drush'
-            with open(config_file) as fp:
-                config.readfp(fp)
-            if not config.has_section(config_section):
-                raise Exception('Config file has no [%s] section' % config_section)
-        else:
-            if options.config_file:
-                raise Exception('Unable to open configuration file %s' % config_file)
-            config = None
-        
-        # base_dir
-        self.base_dir = options.base_dir or \
-                        (config and config.has_option(config_section, 'base-dir') and config.get(config_section, 'base-dir')) or \
-                        self.base_dir
-        
         if not self.base_dir:
-            raise Exception('undefined base dir. Use the --base-dir option.')
-        
-        # Other options
-        for key in ('drush_dir', 'drush_url', 'drush_wrapper',
-                    'drush_local_commands', 'drush_command_dirs',
-                    'drush_commands', 'tmp_dir', 'www_dir'):
-            setattr(self, key, (config and config.has_option(config_section, key) and config.get(config_section, key)) or \
-                    getattr(self, key))
+            raise Exception('undefined base dir')
         
         # Resolve paths
         if not self.is_absolute_path(self.base_dir):
@@ -186,3 +148,57 @@ $DRUSH_CMD --include=$COMMAND_DIRS --root=$WWW_DIR $@""" % {
             f.write(script_content)
         os.chmod(self.drush_wrapper, 0755)
         print 'Done'
+
+
+class DrushInstallerCommand(object):
+    def __init__(self, argv=[]):
+        self.argv = argv
+        self.config_file = None
+    
+    def __call__(self):
+        """Main command callback."""
+        self.installer = DrushInstaller()
+        self.configure()
+        self.installer()
+                
+        
+    def configure(self):
+        """Read configuration from arguments and/or configuration files"""
+        parser = OptionParser()
+        parser.add_option("-c", "--config-file", action="store",
+                          type='string', dest="config_file",
+                          help="Path to configuration file.")
+        parser.add_option("--base-dir", action="store",
+                          type='string', dest="base_dir",
+                          help="Base directory for project environment.")
+        
+        (options, args) = parser.parse_args(self.argv)
+
+        # Read configuration file
+        config_file = options.config_file or self.config_file
+        if config_file and os.path.exists(config_file):
+            config = ConfigParser.ConfigParser()
+            config_section = 'drush'
+            with open(config_file) as fp:
+                config.readfp(fp)
+            if not config.has_section(config_section):
+                raise Exception('Config file has no [%s] section' % config_section)
+        else:
+            if options.config_file:
+                raise Exception('Unable to open configuration file %s' % config_file)
+            config = None
+        
+        # base_dir
+        self.installer.base_dir = options.base_dir or \
+                        (config and config.has_option(config_section, 'base-dir') and config.get(config_section, 'base-dir')) or \
+                        self.installer.base_dir
+        
+        if not self.installer.base_dir:
+            raise Exception('undefined base dir. Use the --base-dir option.')
+        
+        # Other options
+        for key in ('drush_dir', 'drush_url', 'drush_wrapper',
+                    'drush_local_commands', 'drush_command_dirs',
+                    'drush_commands', 'tmp_dir', 'www_dir'):
+            setattr(self.installer, key, (config and config.has_option(config_section, key) and config.get(config_section, key)) or \
+                    getattr(self, key))
