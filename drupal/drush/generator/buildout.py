@@ -14,10 +14,15 @@ class DrushGeneratorRecipe:
 
     def install(self):
         installer = DrushInstaller()
+        # Configure drush interpreter
         bin_directory = self.options.get('bin-directory', self.buildout['buildout'].get('bin-directory'))
         interpreter = self.options.get('interpreter', self.name)
         installer.drush_wrapper = os.path.join(bin_directory, interpreter)
         installer.drush_wrapper = os.path.normpath(installer.drush_wrapper)
+        # Configure base_dir
+        base_dir = self.options.get('directory', self.buildout['buildout'].get('directory'))
+        installer.base_dir = os.path.normpath(base_dir)
+        # Run installer
         installer()
 
     def update(self):
