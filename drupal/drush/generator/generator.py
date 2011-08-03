@@ -52,13 +52,13 @@ class DrushInstaller(object):
         if isinstance(self.drush_command_dirs, basestring):
             self.drush_command_dirs = re.sub(r'\s+', ' ', self.drush_command_dirs).strip(' ')
             self.drush_command_dirs = self.drush_command_dirs.split(' ')
-            # Resolve paths
-            tmp = []
-            for path in self.drush_command_dirs:
-                path = self.configure_path(path)
-                if not path in tmp:
-                    tmp.append(path)
-            self.drush_command_dirs = tmp
+        # Resolve paths
+        tmp = []
+        for path in self.drush_command_dirs:
+            path = self.configure_path(path)
+            if not path in tmp:
+                tmp.append(path)
+        self.drush_command_dirs = tmp
 
         # Parse drush_commands
         if isinstance(self.drush_commands, basestring):
