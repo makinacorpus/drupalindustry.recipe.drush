@@ -138,7 +138,8 @@ WWW_DIR="%(www_dir)s"
 COMMAND_DIRS="%(command_dirs)s"
 
 # Drush wrapper
-$DRUSH_CMD --include=$COMMAND_DIRS --root=$WWW_DIR $@""" % {
+$DRUSH_CMD --include=$COMMAND_DIRS --root=$WWW_DIR $@
+""" % {
             'drush_cmd': os.path.join(self.drush_dir, 'drush'),
             'www_dir': self.www_dir,
             'command_dirs': ':'.join(self.drush_command_dirs),  # WARNING: the ":" separator may fail on Windows
