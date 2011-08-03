@@ -13,6 +13,7 @@ demo/.installed.cfg
 demo/downloads
 demo/lib
 demo/src
+demo/.mr.developer.cfg
 # Setuptools/Distribute's files
 *.egg-info
 dist
