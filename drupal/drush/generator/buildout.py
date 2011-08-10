@@ -23,9 +23,13 @@ class DrushGeneratorRecipe:
         base_dir = self.options.get('directory', self.buildout['buildout'].get('directory'))
         installer.base_dir = os.path.normpath(base_dir)
         # Drush URL
-        drush_url = self.options.get('drush-url', None)
+        drush_url = self.options.get('url', None)
         if drush_url:
             installer.drush_url = drush_url
+        # Drush commands
+        drush_commands = self.options.get('commands', None)
+        if drush_commands:
+            installer.drush_commands = drush_commands
         # Run installer
         installer()
 
