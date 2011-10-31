@@ -28,16 +28,17 @@ commands:
 
 * bin/apache2
 * bin/mysql
+* bin/php
 * ...
 
 Here comes the Drupal's Drush generator. Its goal is to generate a "local"
-drush script.
+drush wrapper.
 
-Where "local drush script" means:
+Where "local drush wrapper" means:
 
 * it is located somewhere in your project deployment. At bin/drush by default.
 * it preconfigures some drush options, so that all commands affect the project.
-  Basically, it customizes drush options like --root or --include.
+  Basically, it customizes drush options like --root, --include and --uri.
 
 Advantages:
 
@@ -54,7 +55,7 @@ Advantages:
   --include and so on each time you use drush. Simply use bin/drush.
 * contribute to drush and its extensions. Using a development version of drush
   is sometimes useful. But you certainly don't want to use an unstable version
-  on all your websites.
+  on all your websites. So keep development version in an isolated environment.
 
 This tool may be used in conjunction with the following:
 
@@ -73,8 +74,8 @@ the drush script.
 If you want it in PHP, BASH or whatever, fork and pull request! You are
 welcome!
 
-In order to be able to actually use the drush command, you need PHP CLI
-(command line interface)!
+In order to be able to actually use the drush command, you need PHP's command
+line interface!
 
 The generated drush script is SH.
 
