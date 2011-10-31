@@ -25,6 +25,7 @@ class DrushInstaller(object):
         self.www_dir = 'www'
         self.php = ''  # By default, provide an empty value to drush so that
                        # drush searches for the adequate PHP by itself.
+        self.drupal_uri = ''
     
     def __call__(self):
         """Main command callback."""
@@ -141,6 +142,7 @@ class DrushInstaller(object):
             'www_dir': self.www_dir,
             'command_dirs': ':'.join(self.drush_command_dirs),  # WARNING: the ":" separator may fail on Windows
             'php': self.php,
+            'drupal_uri': self.drupal_uri,
         }
 
         with open(self.drush_wrapper, 'w') as f:

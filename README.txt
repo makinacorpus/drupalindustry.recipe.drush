@@ -142,6 +142,10 @@ drupal-root
   will be relative to the "directory" option. If you provide an absolute path
   (such as /var/www), the "directory" option will not be used.
 
+drupal-uri
+  URI of the drupal site to use (only needed in multisite environments).
+  Defaults to empty string which means default site.
+
 Standalone
 ----------
 

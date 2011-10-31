@@ -38,6 +38,9 @@ class DrushGeneratorRecipe:
         drupal_root = os.path.join(base_dir, 'www')
         drupal_root = self.options.get('drupal-root', drupal_root)
         installer.www_dir = drupal_root
+        # Drupal URI
+        drupal_uri = self.options.get('drupal-uri', '')
+        installer.drupal_uri = drupal_uri
         # Run installer
         installer()
 
