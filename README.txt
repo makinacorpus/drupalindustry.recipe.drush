@@ -111,7 +111,10 @@ interpreter
   Defaults to part name.
 
 directory
-  Base directory. Used to determine default values for some other options.
+  Base directory. Used to determine default values for some other options:
+
+  * drupal-root
+  
   Defaults to buildout's directory.
 
 url
@@ -131,6 +134,13 @@ php
   best php executable to use.
   Common practice could be to use some local ${buildout:bin-directory}/php
   wrapper, which could use a custom .ini file.
+
+drupal-root
+  Path to drupal root. See drush's --root option.
+  Defaults to "www" folder relative to "directory" option.
+  If you provide a "relative" path (not starting with a '/'), then the path
+  will be relative to the "directory" option. If you provide an absolute path
+  (such as /var/www), the "directory" option will not be used.
 
 Standalone
 ----------

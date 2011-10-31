@@ -34,6 +34,10 @@ class DrushGeneratorRecipe:
         php = self.options.get('php', None)
         if php:
             installer.php = php
+        # Drupal root
+        drupal_root = os.path.join(base_dir, 'www')
+        drupal_root = self.options.get('drupal-root', drupal_root)
+        installer.www_dir = drupal_root
         # Run installer
         installer()
 
