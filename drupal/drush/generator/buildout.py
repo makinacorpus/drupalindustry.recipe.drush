@@ -14,6 +14,8 @@ class DrushGeneratorRecipe:
 
     def install(self):
         installer = DrushInstaller()
+        # Configure generator signature
+        installer.generator_id = '"drupal.drush.generator:drush_generator" buildout recipe'
         # Configure logging
         installer.logger = logging.getLogger(self.name)
         # Configure drush interpreter

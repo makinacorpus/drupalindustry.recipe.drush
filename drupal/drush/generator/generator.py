@@ -1,6 +1,7 @@
 """Helper to download and install Drush in a project's environment."""
 
 import ConfigParser
+from datetime import datetime
 import logging
 from optparse import OptionParser
 import os
@@ -13,6 +14,8 @@ class DrushInstaller(object):
     logger_id = 'drupal-drush-generator'
     
     def __init__(self):
+        # Generator name
+        self.generator_id = 'DrushInstaller class'
         # Logging
         self.logger = logging.getLogger(self.logger_id)
         # Created paths
@@ -152,6 +155,8 @@ class DrushInstaller(object):
             'command_dirs': ':'.join(self.drush_command_dirs),  # WARNING: the ":" separator may fail on Windows
             'php': self.php,
             'drupal_uri': self.drupal_uri,
+            'generator': self.generator_id,
+            'generation_time': datetime.now().isoformat(),
         }
 
         with open(self.drush_wrapper, 'w') as f:
