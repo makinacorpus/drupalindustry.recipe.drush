@@ -130,7 +130,7 @@ php
   Defaults to empty string, which means that drush itself will try to guess the
   best php executable to use.
   Common practice could be to use some local ${buildout:bin-directory}/php
-  wrapper.
+  wrapper, which could use a custom .ini file.
 
 Standalone
 ----------
