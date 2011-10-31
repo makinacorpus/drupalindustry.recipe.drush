@@ -14,6 +14,8 @@ class DrushGeneratorRecipe:
 
     def install(self):
         installer = DrushInstaller()
+        # Configure logging
+        installer.logger = logging.getLogger(self.name)
         # Configure drush interpreter
         bin_directory = self.options.get('bin-directory', self.buildout['buildout'].get('bin-directory'))
         interpreter = self.options.get('interpreter', self.name)
@@ -48,6 +50,8 @@ class DrushGeneratorRecipe:
         installer.drush_command_dirs = [commands_directory]
         # Run installer
         installer()
+        # Return list of created paths
+        return installer.created_paths
 
     def update(self):
         pass

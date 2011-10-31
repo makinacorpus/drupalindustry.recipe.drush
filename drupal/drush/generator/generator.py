@@ -1,6 +1,7 @@
 """Helper to download and install Drush in a project's environment."""
 
 import ConfigParser
+import logging
 from optparse import OptionParser
 import os
 import re
@@ -9,7 +10,13 @@ import sys
 
 
 class DrushInstaller(object):
+    logger_id = 'drupal-drush-generator'
+    
     def __init__(self):
+        # Logging
+        self.logger = logging.getLogger(self.logger_id)
+        # Created paths
+        self.created_paths = []
         # Defaults (conventions)
         self.base_dir = os.getcwd()
         lib_dir = 'lib'
@@ -31,11 +38,11 @@ class DrushInstaller(object):
         """Main command callback."""
         self.configure()
         if self.is_drush_installed():
-            print 'Drush is already installed. Skipping installation'
+            self.logger.info('Drush is already installed. Skipping installation')
         else:
-            print "Installing drush in %s" % self.drush_dir
+            self.logger.info("Installing drush in %s", self.drush_dir)
             self.install_drush()
-            print "Done"
+            self.logger.info("Done")
         self.install_drush_commands()
         self.generate_drush_wrapper()
 
@@ -96,6 +103,7 @@ class DrushInstaller(object):
         """Download and install drush."""
         self.mkdir(self.tmp_dir)
         self.mkdir(self.drush_dir)
+        self.created_paths.append(self.drush_dir)
         tmp_archive = os.path.join(self.tmp_dir, 'drush.tar.gz')
         subprocess.call(["wget", self.drush_url, "-O", tmp_archive])
         subprocess.call(['tar',
@@ -107,12 +115,13 @@ class DrushInstaller(object):
 
     def install_drush_commands(self):
         self.mkdir(self.drush_local_commands)
+        self.created_paths.append(self.drush_local_commands)
         for url in self.drush_commands:
             self.install_drush_command(url)
     
     def install_drush_command(self, url):
         """Download and install a drush command."""
-        print "Installing %s" % url
+        self.logger.info("Installing %s", url)
         self.mkdir(self.tmp_dir)
         tmp_archive = os.path.join(self.tmp_dir, 'drush_command.tar.gz')
         subprocess.call(["wget",
@@ -125,11 +134,11 @@ class DrushInstaller(object):
                          '-C',
                          self.drush_local_commands])
         os.remove(tmp_archive)
-        print 'Done'
+        self.logger.info('Done')
     
     def generate_drush_wrapper(self):
         """Generate drush wrapper."""
-        print 'Generating bin/drush command'
+        self.logger.info('Generating bin/drush command')
         template_filename = os.path.join(
             os.path.normpath(os.path.abspath(os.path.dirname(__file__))),
             'templates',
@@ -148,7 +157,8 @@ class DrushInstaller(object):
         with open(self.drush_wrapper, 'w') as f:
             f.write(script_content)
         os.chmod(self.drush_wrapper, 0755)
-        print 'Done'
+        self.logger.info('Done')
+        self.created_paths.append(self.drush_wrapper)
 
 
 class DrushInstallerCommand(object):
