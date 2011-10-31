@@ -30,6 +30,10 @@ class DrushGeneratorRecipe:
         drush_commands = self.options.get('commands', None)
         if drush_commands:
             installer.drush_commands = drush_commands
+        # Path to PHP
+        php = self.options.get('php', None)
+        if php:
+            installer.php = php
         # Run installer
         installer()
 

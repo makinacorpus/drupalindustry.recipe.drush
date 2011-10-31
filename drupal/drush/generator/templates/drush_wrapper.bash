@@ -7,6 +7,8 @@
 DRUSH_CMD="%(drush_cmd)s"
 WWW_DIR="%(www_dir)s"
 COMMAND_DIRS="%(command_dirs)s"
+DRUSH_PHP="%(php)s"
 
 # Drush wrapper
+export DRUSH_PHP
 $DRUSH_CMD --include=$COMMAND_DIRS --root=$WWW_DIR $@

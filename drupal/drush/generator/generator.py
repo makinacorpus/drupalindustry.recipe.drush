@@ -23,6 +23,8 @@ class DrushInstaller(object):
         self.drush_wrapper = os.path.join('bin', 'drush')
         self.tmp_dir = os.path.join('var', 'tmp')
         self.www_dir = 'www'
+        self.php = ''  # By default, provide an empty value to drush so that
+                       # drush searches for the adequate PHP by itself.
     
     def __call__(self):
         """Main command callback."""
@@ -138,6 +140,7 @@ class DrushInstaller(object):
             'drush_cmd': os.path.join(self.drush_dir, 'drush'),
             'www_dir': self.www_dir,
             'command_dirs': ':'.join(self.drush_command_dirs),  # WARNING: the ":" separator may fail on Windows
+            'php': self.php,
         }
 
         with open(self.drush_wrapper, 'w') as f:

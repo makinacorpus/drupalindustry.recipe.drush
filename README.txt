@@ -125,6 +125,13 @@ commands
 
     http://ftp.drupal.org/files/projects/drush_make-6.x-2.3.tar.gz
 
+php
+  Absolute path to php command line interface (CLI) to use.
+  Defaults to empty string, which means that drush itself will try to guess the
+  best php executable to use.
+  Common practice could be to use some local ${buildout:bin-directory}/php
+  wrapper.
+
 Standalone
 ----------
 
