@@ -116,14 +116,14 @@ directory
 
 url
   Full URL of the Drush archive (.tar.gz).
-  Defaults to http://ftp.drupal.org/files/projects/drush-7.x-4.4.tar.gz
+  Defaults to http://ftp.drupal.org/files/projects/drush-7.x-4.5.tar.gz
 
 commands
   List of URL of additional drush commands to install. One per line.
   Defaults to:
   ::
 
-    http://ftp.drupal.org/files/projects/drush_make-6.x-2.2.tar.gz
+    http://ftp.drupal.org/files/projects/drush_make-6.x-2.3.tar.gz
 
 Standalone
 ----------

@@ -13,12 +13,12 @@ class DrushInstaller(object):
         # Defaults (conventions)
         self.base_dir = os.getcwd()
         lib_dir = 'lib'
-        self.drush_url = 'http://ftp.drupal.org/files/projects/drush-7.x-4.4.tar.gz'
+        self.drush_url = 'http://ftp.drupal.org/files/projects/drush-7.x-4.5.tar.gz'
         self.drush_dir = os.path.join(lib_dir, 'drush')
         self.drush_local_commands = os.path.join(lib_dir, 'drush_commands')
         self.drush_command_dirs = [self.drush_local_commands]
         self.drush_commands = [
-            'http://ftp.drupal.org/files/projects/drush_make-6.x-2.2.tar.gz',
+            'http://ftp.drupal.org/files/projects/drush_make-6.x-2.3.tar.gz',
         ]
         self.drush_wrapper = os.path.join('bin', 'drush')
         self.tmp_dir = os.path.join('var', 'tmp')
