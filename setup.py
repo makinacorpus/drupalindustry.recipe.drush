@@ -30,7 +30,7 @@ setup(
     packages=find_packages(),
     namespace_packages=['drupal', 'drupal.drush'],
     include_package_data=True,
-    data_files = [('etc', ['drupal/drush/generator/templates/drush_wrapper.sh'])],
+    data_files = [('drupal/drush/generator/templates/', ['drupal/drush/generator/templates/drush_wrapper.sh'])],
     install_requires=[
         'setuptools',
     ],
