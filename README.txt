@@ -144,6 +144,7 @@ drupal-root
 
 drupal-uri
   URI of the drupal site to use (only needed in multisite environments).
+  See drush's --uri or -l option.
   Defaults to empty string which means default site.
 
 Standalone
