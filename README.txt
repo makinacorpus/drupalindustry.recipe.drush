@@ -33,7 +33,7 @@ commands:
 Here comes the Drupal's Drush generator. Its goal is to generate a "local"
 drush script.
 
-"local drush script" means:
+Where "local drush script" means:
 
 * it is located somewhere in your project deployment. At bin/drush by default.
 * it preconfigures some drush options, so that all commands affect the project.
@@ -73,7 +73,8 @@ the drush script.
 If you want it in PHP, BASH or whatever, fork and pull request! You are
 welcome!
 
-In order to be able to actually use the drush command, you need PHP!
+In order to be able to actually use the drush command, you need PHP CLI
+(command line interface)!
 
 The generated drush script is BASH.
 
@@ -96,7 +97,36 @@ You got a bin/drush command. Let's try it (PHP is required):
 Configuration
 =============
 
+buildout
+--------
+
 See demo/buildout.cfg for a sample buildout configuration.
+
+bin-directory
+  Directory in which install drush wrapper.
+  Defaults to buildout's bin-directory, which itself defaults to "bin".
+
+interpreter
+  Filename of the wrapper.
+  Defaults to part name.
+
+directory
+  Base directory. Used to determine default values for some other options.
+  Defaults to buildout's directory.
+
+url
+  Full URL of the Drush archive (.tar.gz).
+  Defaults to http://ftp.drupal.org/files/projects/drush-7.x-4.4.tar.gz
+
+commands
+  List of URL of additional drush commands to install. One per line.
+  Defaults to:
+  ::
+
+    http://ftp.drupal.org/files/projects/drush_make-6.x-2.2.tar.gz
+
+Standalone
+----------
 
 See etc/drush.cfg.sample for a sample standalone configuration.
 
