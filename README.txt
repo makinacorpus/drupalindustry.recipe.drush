@@ -76,7 +76,7 @@ welcome!
 In order to be able to actually use the drush command, you need PHP CLI
 (command line interface)!
 
-The generated drush script is BASH.
+The generated drush script is SH.
 
 The demo project: with buildout
 ===============================
