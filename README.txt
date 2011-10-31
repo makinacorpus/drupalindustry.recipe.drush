@@ -147,6 +147,16 @@ drupal-uri
   See drush's --uri or -l option.
   Defaults to empty string which means default site.
 
+drush-directory
+  Location of drush on the filesystem. Drush will be downloaded and installed
+  there.
+  Defaults to "lib/drush" folder relative to "directory" option.
+
+commands-directory
+  Location where to install drush commands.
+  See drush's "--include" option.
+  Defaults to "lib/drush_commands" folder relative to "directory" option.
+
 Standalone
 ----------
 

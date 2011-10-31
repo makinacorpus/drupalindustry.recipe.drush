@@ -41,6 +41,11 @@ class DrushGeneratorRecipe:
         # Drupal URI
         drupal_uri = self.options.get('drupal-uri', '')
         installer.drupal_uri = drupal_uri
+        # Drush folder
+        installer.drush_dir = drush_directory = self.options.get('drush-directory', 'lib/drush')
+        # Drush commands folder
+        commands_directory = self.options.get('commands-directory', 'lib/drush_commands')
+        installer.drush_command_dirs = [commands_directory]
         # Run installer
         installer()
 
