@@ -145,7 +145,7 @@ class DrushInstaller(object):
         template_filename = os.path.join(
             os.path.normpath(os.path.abspath(os.path.dirname(__file__))),
             'templates',
-            'drush_wrapper.bash'
+            'drush_wrapper.sh'
             )
         with open(template_filename) as f:
             script_content = f.read()
