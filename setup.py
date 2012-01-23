@@ -12,9 +12,9 @@ def read_relative_file(filename):
 
 
 setup(
-    name='drupal.drush.generator',
-    version='0.1dev',
-    url='https://github.com/benoitbryon/drupal-drush-generator',
+    name='drupalindustry.recipe.drush',
+    version='0.1',
+    url='https://github.com/makinacorpus/drupalindustry.recipe.drush',
     author='Benoit Bryon',
     author_email='benoit@marmelune.net',
     license='BSD',
@@ -28,15 +28,15 @@ setup(
         'Operating System :: OS Independent',
     ],
     packages=find_packages(),
-    namespace_packages=['drupal', 'drupal.drush'],
+    namespace_packages=['drupalindustry', 'drupalindustry.recipe'],
     include_package_data=True,
-    data_files = [('drupal/drush/generator/templates/', ['drupal/drush/generator/templates/drush_wrapper.sh'])],
+    data_files = [('drupalindustry/recipe/drush/templates/', ['drupalindustry/recipe/drush/templates/drush_wrapper.sh'])],
     install_requires=[
         'setuptools',
     ],
     entry_points={
         'zc.buildout': [
-            'drush_generator = drupal.drush.generator.buildout:DrushGeneratorRecipe',
+            'drush_generator = drupalindustry.recipe.drush.buildout:DrushGeneratorRecipe',
         ],
     },
     scripts=[

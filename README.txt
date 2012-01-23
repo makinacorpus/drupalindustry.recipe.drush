@@ -1,6 +1,6 @@
-########################
-Drupal's Drush generator
-########################
+###########################
+drupalindustry.recipe.drush
+###########################
 Install drush in your project's isolated environment
 ####################################################
 
@@ -31,7 +31,7 @@ commands:
 * bin/php
 * ...
 
-Here comes the Drupal's Drush generator. Its goal is to generate a "local"
+Here comes drupalindustry.recipe.drush. Its goal is to generate a "local"
 drush wrapper.
 
 Where "local drush wrapper" means:
@@ -172,7 +172,7 @@ You can install this tool in a virtual environment:
   virtualenv --no-site-packages --distribute env
   source env/bin/activate
   python setup.py install
-  ls -al env/bin/drush_generator.py
+  ls -al env/bin/
 
 Standalone usage
 ================
@@ -180,4 +180,4 @@ Standalone usage
 You can generate a drush script outside a buildout environment:
 ::
 
-  drupal/drush/generator/bin/drush_generator.py
+  drupalindustry/recipe/drush/bin/drush_generator.py

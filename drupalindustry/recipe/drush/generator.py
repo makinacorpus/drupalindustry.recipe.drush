@@ -11,11 +11,11 @@ import sys
 
 
 class DrushInstaller(object):
-    logger_id = 'drupal-drush-generator'
+    logger_id = 'drupalindustry-recipe-drush'
     
     def __init__(self):
         # Generator name
-        self.generator_id = 'DrushInstaller class'
+        self.generator_id = "DrushInstaller class"
         # Logging
         self.logger = logging.getLogger(self.logger_id)
         # Created paths
@@ -176,8 +176,7 @@ class DrushInstallerCommand(object):
         self.installer = DrushInstaller()
         self.configure()
         self.installer()
-                
-        
+    
     def configure(self):
         """Read configuration from arguments and/or configuration files"""
         parser = OptionParser()
@@ -216,5 +215,6 @@ class DrushInstallerCommand(object):
         for key in ('drush_dir', 'drush_url', 'drush_wrapper',
                     'drush_local_commands', 'drush_command_dirs',
                     'drush_commands', 'tmp_dir', 'www_dir'):
-            setattr(self.installer, key, (config and config.has_option(config_section, key) and config.get(config_section, key)) or \
-                    getattr(self, key))
+            if config and config.has_option(config_section, key):
+                if config.get(config_section, key):
+                    setattr(self.installer, key)

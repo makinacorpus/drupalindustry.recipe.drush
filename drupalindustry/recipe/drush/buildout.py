@@ -3,7 +3,7 @@ import os.path
 import logging
 import zc.buildout
 
-from drupal.drush.generator.generator import DrushInstaller
+from drupalindustry.recipe.drush.generator import DrushInstaller
 
 
 class DrushGeneratorRecipe:
@@ -15,7 +15,7 @@ class DrushGeneratorRecipe:
     def install(self):
         installer = DrushInstaller()
         # Configure generator signature
-        installer.generator_id = '"drupal.drush.generator:drush_generator" buildout recipe'
+        installer.generator_id = '"drupalindustry.recipe.drush:drush_generator" buildout recipe'
         # Configure logging
         installer.logger = logging.getLogger(self.name)
         # Configure drush interpreter
