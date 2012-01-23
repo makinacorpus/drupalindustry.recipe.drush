@@ -34,7 +34,6 @@ setup(
     namespace_packages=['drupalindustry', 'drupalindustry.recipe'],
     include_package_data=True,
     data_files = [('drupalindustry/recipe/drush/templates/', ['drupalindustry/recipe/drush/templates/drush_wrapper.sh'])],
-    include_package_data=True,
     zip_safe=False,
     install_requires=[
         'setuptools',
