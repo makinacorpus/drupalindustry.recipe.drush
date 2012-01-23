@@ -11,9 +11,12 @@ def read_relative_file(filename):
         return f.read()
 
 
+version = '0.1'
+
+
 setup(
     name='drupalindustry.recipe.drush',
-    version='0.1',
+    version=version,
     url='https://github.com/makinacorpus/drupalindustry.recipe.drush',
     author='Benoit Bryon',
     author_email='benoit@marmelune.net',
@@ -23,7 +26,7 @@ setup(
     long_description=read_relative_file('README.txt'),
     platforms='Any',
     classifiers = [
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
     ],
@@ -31,6 +34,8 @@ setup(
     namespace_packages=['drupalindustry', 'drupalindustry.recipe'],
     include_package_data=True,
     data_files = [('drupalindustry/recipe/drush/templates/', ['drupalindustry/recipe/drush/templates/drush_wrapper.sh'])],
+    include_package_data=True,
+    zip_safe=False,
     install_requires=[
         'setuptools',
     ],
