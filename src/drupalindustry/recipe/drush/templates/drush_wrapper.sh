@@ -12,4 +12,4 @@ DRUSH_PHP="%(php)s"
 
 # Drush wrapper
 export DRUSH_PHP
-$DRUSH_CMD --include=$COMMAND_DIRS --root=$WWW_DIR --uri=$DRUPAL_URI $@
+$DRUSH_CMD --include=$COMMAND_DIRS --root=$WWW_DIR --uri=$DRUPAL_URI "$@"
