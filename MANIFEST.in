@@ -1,0 +1,2 @@
+recursive-include src/drupalindustry/recipe *
+include bin/drush_generator.py

@@ -1,6 +1,9 @@
 # coding=utf-8
-import os.path
+import os
 from setuptools import setup, find_packages
+
+
+version = '0.1'
 
 
 def read_relative_file(filename):
@@ -11,42 +14,39 @@ def read_relative_file(filename):
         return f.read()
 
 
-version = '0.1'
-
-
-setup(
-    name='drupalindustry.recipe.drush',
-    version=version,
-    url='https://github.com/makinacorpus/drupalindustry.recipe.drush',
-    author='Benoit Bryon',
-    author_email='benoit@marmelune.net',
-    license='BSD',
-    description='Helpers to install drush and generate a "project-specific" ' \
-                'drush script. Includes a buildout recipe.',
-    long_description=read_relative_file('README.txt'),
-    platforms='Any',
-    classifiers = [
-        'Development Status :: 4 - Beta',
-        'License :: OSI Approved :: BSD License',
-        'Operating System :: OS Independent',
-    ],
-    packages=find_packages(),
-    namespace_packages=['drupalindustry', 'drupalindustry.recipe'],
-    include_package_data=True,
-    data_files = [
-        ('bin', ['bin/drush_generator.py']),
-        ('drupalindustry/recipe/drush/templates/', ['drupalindustry/recipe/drush/templates/drush_wrapper.sh'])
-        ],
-    zip_safe=False,
-    install_requires=[
-        'setuptools',
-    ],
-    entry_points={
-        'zc.buildout': [
-            'drush_generator = drupalindustry.recipe.drush.buildout:DrushGeneratorRecipe',
-        ],
-    },
-    scripts=[
-        'bin/drush_generator.py',
-    ],
-)
+setup(name='drupalindustry.recipe.drush',
+      version=version,
+      description='Helpers to install drush and generate a "project-specific" ' \
+                  'drush script. Includes a buildout recipe.',
+      long_description=read_relative_file('README.txt'),
+      platforms='Any',
+      classifiers = [
+          'Development Status :: 4 - Beta',
+          'License :: OSI Approved :: BSD License',
+          'Operating System :: OS Independent',
+          "Programming Language :: Python",
+          "Programming Language :: PHP",
+      ],
+      keywords="drupal deployment deploy install drush",
+      author='Benoit Bryon',
+      author_email='benoit@marmelune.net',
+      url='https://github.com/makinacorpus/drupalindustry.recipe.drush',
+      license='BSD',
+      packages=find_packages('src', exclude=['ez_setup']),
+      package_dir = {'': 'src'},
+      namespace_packages=['drupalindustry', 'drupalindustry.recipe'],
+      include_package_data=True,
+      zip_safe=False,
+      data_files = [
+          ('bin', ['bin/drush_generator.py']),
+          ('src/drupalindustry/recipe/drush/templates/', ['src/drupalindustry/recipe/drush/templates/drush_wrapper.sh'])
+      ],
+      install_requires=['setuptools', ],
+      entry_points=""" # -*- Entry points: -*-
+      [zc.buildout]
+      drush_generator = drupalindustry.recipe.drush.buildout:DrushGeneratorRecipe
+      """,
+      scripts=[
+          'bin/drush_generator.py',
+      ],
+      )
